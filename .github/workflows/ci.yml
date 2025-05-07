@@ -10,7 +10,7 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
     env:
-      DJANGO_SETTING_MODULES: zenstock.settings.dev
+      DJANGO_SETTINGS_MODULE: zenstock.settings.dev
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
     steps:
       - name: Checkout code
