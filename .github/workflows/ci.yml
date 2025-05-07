@@ -1,0 +1,33 @@
+name: Build and test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    env:
+      DJANGO_SETTING_MODULES: zenstock.settings.dev
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Apply migrations
+        run: python manage.py migrate
+
+      - name: Run tests
+        run: pytest
