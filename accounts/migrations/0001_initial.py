@@ -11,8 +11,8 @@ from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 def create_groups(apps: Apps, schema_editor: BaseDatabaseSchemaEditor):
     Group = apps.get_model("auth.Group")
     Group.objects.get_or_create(name="Admins")
-    Group.objects.get_or_create(name="Shop Managers")
-    Group.objects.get_or_create(name="Sellers")
+    Group.objects.get_or_create(name="Gestionnaires")
+    Group.objects.get_or_create(name="Agents")
 
 
 class Migration(migrations.Migration):
