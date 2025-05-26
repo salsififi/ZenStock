@@ -1,8 +1,12 @@
 from django.contrib.auth.models import AbstractUser
-from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 
 class User(AbstractUser):
     """Class for all users"""
-    email = models.EmailField(_("email address"), blank=True, unique=True)
+
+    def save(self, *args, **kwargs):
+        if self.email:
+            if self.__class__.objects.filter(email=self.email).exclude(pk=self.pk).exists():
+                raise ValidationError("This email is already associated to another user.")
+        super().save(*args, **kwargs)
